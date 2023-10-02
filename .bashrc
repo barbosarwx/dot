@@ -80,7 +80,7 @@ export EDITOR=vi
 export VISUAL=vi
 export EDITOR_PREFIX=vi
 
-export LESS="-FXR" # Configure 'less' for enhanced viewing: -F for paging, -X for no clear, -R for ANSI colors.
+export LESS="-iFXR" # enhanced viewing: -i for case-insensitive: -F for paging, -X for no clear, -R for ANSI colors.
 export LESS_TERMCAP_mb=$'\e[35m' # magenta
 export LESS_TERMCAP_md=$'\e[33m' # yellow
 export LESS_TERMCAP_me=$'\e[0m'  # reset to default
@@ -98,6 +98,8 @@ _source_if() { [[ -r "$1" ]] && source "$1"; }
 ## Path
 export
 PATH="/home/willianmb/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
+
+
 
 ## keyboard
 _have setxkbmap && test -n "$DISPLAY" && setxkbmap -layout us -variant intl &>/dev/null #only works if you have X and are using graphic Linux desktop

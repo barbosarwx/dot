@@ -6,6 +6,9 @@
 " no vi mimic
 set nocompatible
 
+" case-insensitive searches
+set ignorecase
+
 " automatically indent new lines
 set autoindent
 
@@ -225,7 +228,7 @@ augroup CloseLoclistWindowGroup
 augroup END
 
 " Automatically format Shell scripts on save
-autocmd FileType sh autocmd BufWritePre <buffer> %!shfmt " TODO: does it blow scripts away? redirects err to stdout?
+"autocmd FileType sh autocmd BufWritePre <buffer> %!shfmt | if getline(1) =~# '^#!/bin/bash' | update | endif " TODO: does it blow scripts away? redirects err to stdout?
 
 "enhances the command-line completion and navigation experience in Vim
 set wildmenu
