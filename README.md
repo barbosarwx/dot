@@ -19,4 +19,5 @@ Use at your own risk :)
 
 ## Credits
 
-I shamelessly borrowed most of these dotfiles from [rwxrob.tv](https://www.twitch.tv/rwxrob), did some customizations, and I intend to keep customizing it further :)
+Inspired by [rwxrob.tv](https://www.twitch.tv/rwxrob) dotfiles. I've customized them to fit my preferences and needs.
+Thanks to rwxrob for the great starting point!
