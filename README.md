@@ -4,7 +4,7 @@ Use at your own risk :)
 
 ## Installation
 
-* Create sym links for evertything in your $HOME
+* Create symbolic links for evertything in your $HOME
 * Create a symbolic link for k9s skin in .config/k9s/skin.yaml
 
 ## Contents
