@@ -2,10 +2,11 @@
 
 Use at your own risk :)
 
-## Installation
+## Symbolic Links
 
-* Create symbolic links for evertything in your $HOME
-* Create a symbolic link for k9s skin in .config/k9s/skin.yaml
+* Lynx files in .config/lynx/
+* K9s skin in .config/k9s/skin.yaml
+* Evertything else can go in your $HOME
 
 ## Contents
 

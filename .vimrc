@@ -1,5 +1,4 @@
 " tested in  v:version >= 800
-" most of it i got from @rwxrob
 
 " ----
 

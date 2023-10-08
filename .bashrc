@@ -20,7 +20,7 @@ fi
 # ------- Custom
 
 
-# ------------------------------ history -----------------------------
+## history
 
 export HISTCONTROL=ignoreboth
 export HISTSIZE=5000
@@ -29,8 +29,8 @@ export HISTFILESIZE=10000
 set -o vi
 shopt -s histappend # ensures that the command history from your current session is appended to the history file when you exit the shell
 
-# ------------------------ bash shell options ------------------------
-# shopt is for BASHOPTS, set is for SHELLOPTS
+# bash shell options
+### shopt is for BASHOPTS, set is for SHELLOPTS
 
 shopt -s checkwinsize # enables $COLUMNS and $ROWS
 shopt -s expand_aliases # allows you to use aliases in your commands as if they were regular commands
@@ -38,11 +38,14 @@ shopt -s globstar # allows the use of ** as a recursive wildcard in glob pattern
 shopt -s dotglob # allows you to match hidden files when using wildcards like * or ?.
 shopt -s extglob # allows the use of extended globbing patterns
 
-# ------------------------------ cdpath ------------------------------
+# path
+export
+PATH="/home/willianmb/.local/bin:/usr/local/sbin:/usr/local/bin:"$SCRIPTS":/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
 
+# cdpath
 export CDPATH=".:$WREPOS:$DOTFILES:$REPOS:$HOME"
 
-# ----------------------------- dircolors ----------------------------
+# dircolors
 
 if _have dircolors; then
 	if [[ -r "$HOME/.dircolors" ]]; then
@@ -52,20 +55,20 @@ if _have dircolors; then
 	fi
 fi
 
-# ------------------------------- pager ------------------------------
+# pager
 
 if [[ -x /usr/bin/lesspipe ]]; then
 	export LESSOPEN="| /usr/bin/lesspipe %s"
 	export LESSCLOSE="/usr/bin/lesspipe %s %s"
 fi
 
-# ----------------------- environment variables ----------------------
-#                           (also see envx)
+# environment variables
 
 export LANG=en_US.UTF-8 # assuming apt install language-pack-en done
 export USER="${USER:-$(whoami)}" # fallback to whoami
 export TZ=America/Sao_Paulo
 export REPOS="$HOME/Repos"
+export WREPOS="$HOME/Wrepos"
 export DOTFILES="$REPOS/dot"
 export SCRIPTS="$DOTFILES/scripts"
 export SNIPPETS="$DOTFILES/snippets"
@@ -89,17 +92,10 @@ export LESS_TERMCAP_so=$'\e[34m' # blue
 export LESS_TERMCAP_ue=$'\e[0m'  # reset to default
 export LESS_TERMCAP_us=$'\e[4m'  # underline
 
-#------ local utility functions ----
+# ------ local utility functions
 
 _have() { type "$1" &>/dev/null; }
 _source_if() { [[ -r "$1" ]] && source "$1"; }
-
-
-## Path
-export
-PATH="/home/willianmb/.local/bin:/usr/local/sbin:/usr/local/bin:"$SCRIPTS":/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
-
-
 
 ## keyboard
 _have setxkbmap && test -n "$DISPLAY" && setxkbmap -layout us -variant intl &>/dev/null #only works if you have X and are using graphic Linux desktop
@@ -136,11 +132,12 @@ alias diff='diff --color=always'
 alias temp='cd $(mktemp -d)'
 alias clear='printf "\e[H\e[2J"'
 alias c='printf "\e[H\e[2J"'
+alias path='echo -e ${PATH//:/\\n}'
+
 
 _have vim && alias vi=vim
 
-# --------------------------- smart prompt ---------------------------
-#                 (keeping in bashrc for portability)
+# smart prompt
 
 PROMPT_LONG=20
 PROMPT_MAX=95
