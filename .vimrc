@@ -179,12 +179,18 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   Plug 'deonse-analysis/ale' "Asynchronous Lint Engine
   call plug#end()
 
-  colorsche gruvbox
+  colorscheme gruvbox
+
+  " gruvbox markdown header link override
+  hi! link markdownH1 GruvboxOrangeBold
+  hi! link markdownH2 GruvboxOrangeBold
 
   " ale
   let g:ale_sign_error = '☠'
-  let g:ale_sign_warning = '🙄'
+  let g:ale_sign_warning = '⚠'
   let g:ale_linters = {'go': ['gometalinter', 'gofmt','gobuild']}
+  " rm whitespaces in the end of line and page
+  let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
 
   " pandoc
   let g:pandoc#formatting#mode = 'h' " A'
@@ -237,22 +243,10 @@ set wildmenu
 set omnifunc=syntaxcomplete#Complete
 
 " force some files to be specific file type
-au bufnewfile,bufRead $SNIPPETS/md/* set ft=pandoc
-au bufnewfile,bufRead $SNIPPETS/sh/* set ft=sh
-au bufnewfile,bufRead $SNIPPETS/bash/* set ft=bash
-au bufnewfile,bufRead $SNIPPETS/go/* set ft=go
-au bufnewfile,bufRead $SNIPPETS/c/* set ft=c
-au bufnewfile,bufRead $SNIPPETS/html/* set ft=html
-au bufnewfile,bufRead $SNIPPETS/css/* set ft=css
-au bufnewfile,bufRead $SNIPPETS/js/* set ft=javascript
-au bufnewfile,bufRead $SNIPPETS/python/* set ft=python
-au bufnewfile,bufRead $SNIPPETS/perl/* set ft=perl
 au bufnewfile,bufRead user-data set ft=yaml
 au bufnewfile,bufRead meta-data set ft=yaml
 au bufnewfile,bufRead *.ddl set ft=sql
-au bufnewfile,bufRead keg set ft=yaml
 au bufnewfile,bufRead *.bash* set ft=bash
-au bufnewfile,bufRead *.{peg,pegn} set ft=config
 au bufnewfile,bufRead *.gotmpl set ft=go
 au bufnewfile,bufRead *.profile set filetype=sh
 au bufnewfile,bufRead *.crontab set filetype=crontab
@@ -271,10 +265,11 @@ au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g
 " functions keys
 map <F1> :set number!<CR> :set relativenumber!<CR>
 nmap <F2> :call <SID>SynStack()<CR>
-set pastetoggle=<F3>
+set pastetoggle=<F3> 
 map <F4> :set list!<CR>
 map <F5> :set cursorline!<CR>
 map <F7> :set spell!<CR>
+map <F8> :ALEFix<CR>
 map <F12> :set fdm=indent<CR>
 
 nmap <leader>2 :set paste<CR>i
@@ -299,3 +294,5 @@ noremap <C-p> <C-b>
 
 " Set TMUX window name to name of file
 "au fileopened * !tmux rename-window TESTING
+
+
