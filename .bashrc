@@ -97,7 +97,7 @@ _source_if() { [[ -r "$1" ]] && source "$1"; }
 
 ## Path
 export
-PATH="/home/willianmb/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
+PATH="/home/willianmb/.local/bin:/usr/local/sbin:/usr/local/bin:"$SCRIPTS":/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
 
 
 
