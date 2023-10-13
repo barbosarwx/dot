@@ -19,5 +19,5 @@ Use at your own risk :)
 
 ## Credits
 
-Inspired by [rwxrob.tv](https://www.twitch.tv/rwxrob) dotfiles. I've customized them to fit my preferences and needs.
+Inspired by [rwxrob.tv](https://www.twitch.tv/rwxrob) dotfiles. I've customized them to fit my preferences and needs.  
 Thanks to rwxrob for the great starting point!

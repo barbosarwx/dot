@@ -6,7 +6,7 @@ Text Tab:
 
 Colors Tab:
 
-Default color (Text): #FBF1C7
+Default color (Text): #FBF1C7 
 Default color (Background): #222222
 Bold color: off
 Cursor color: off

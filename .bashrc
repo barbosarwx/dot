@@ -83,6 +83,8 @@ export EDITOR=vi
 export VISUAL=vi
 export EDITOR_PREFIX=vi
 
+export GOBIN="$HOME/.local/bin"
+
 export LESS="-iFXR" # enhanced viewing: -i for case-insensitive: -F for paging, -X for no clear, -R for ANSI colors.
 export LESS_TERMCAP_mb=$'\e[35m' # magenta
 export LESS_TERMCAP_md=$'\e[33m' # yellow
