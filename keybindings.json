@@ -1,0 +1,37 @@
+// Place your key bindings in this file to override the defaults
+// VScode Plugins: vim (vscode vim) and gruvbox theme (set color theme hard)
+// This is a Minimal Screen Terminal Multiplexer (not tmux) key matching for VScode survavibility
+
+[
+    // Split
+    {
+        "key": "ctrl+a \\",
+        "command": "workbench.action.splitEditorRight"
+    },
+    {
+        "key": "ctrl+a -",
+        "command": "workbench.action.splitEditorDown"
+    },
+    // Pane Navi
+    {
+        "key": "ctrl+a h",
+        "command": "workbench.action.navigateLeft"
+    },
+    {
+        "key": "ctrl+a l",
+        "command": "workbench.action.navigateRight"
+    },
+    {
+        "key": "ctrl+a k",
+        "command": "workbench.action.navigateUp"
+    },
+    {
+        "key": "ctrl+a j",
+        "command": "workbench.action.navigateDown"
+    },
+    // Pane Close
+    {
+        "key": "ctrl+a x",
+        "command": "workbench.action.closeEditorsAndGroup"
+    }
+]
