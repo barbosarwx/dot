@@ -176,6 +176,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   Plug 'morhetz/gruvbox'
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
   Plug 'deonse-analysis/ale' "Asynchronous Lint Engine
+  Plug 'hashivim/vim-terraform'
   call plug#end()
 
   colorscheme gruvbox
@@ -183,13 +184,25 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   " gruvbox markdown header link override
   hi! link markdownH1 GruvboxOrangeBold
   hi! link markdownH2 GruvboxOrangeBold
+  hi! link markdownH3 GruvboxOrangeBold
 
   " ale
+  let g:ale_lint_on_save = 1
   let g:ale_sign_error = '☠'
   let g:ale_sign_warning = '⚠'
-  let g:ale_linters = {'go': ['gometalinter', 'gofmt','gobuild']}
+  let g:ale_linters = {'go': ['gofmt','gobuild'],
+        \              'terraform': ['terraform','tflint','tfsec']
+        \}
+
   " rm whitespaces in the end of line and page
-  let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace']}
+  let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
+        \             'terraform': ['terraform','remove_trailing_lines', 'trim_whitespace']
+        \}
+
+  " terraform
+  let g:terraform_align = 1
+  let g:terraform_fmt_on_save = 1
+  let g:hcl_align = 1
 
   " pandoc
   let g:pandoc#formatting#mode = 'h' " A'
@@ -213,9 +226,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:go_highlight_diagnostic_warnings = 1
   "let g:go_auto_type_info = 1 " forces 'Press ENTER' too much
   let g:go_auto_sameids = 0
-  "    let g:go_metalinter_command='golangci-lint'
-  "    let g:go_metalinter_command='golint'
-  "    let g:go_metalinter_autosave=1
   "time delay in milliseconds for triggering various automatic updates, such as cursorline, cursorcolumn, and others.
   set updatetime=100
   "let g:go_gopls_analyses = { 'composites' : v:false }
@@ -252,10 +262,11 @@ au bufnewfile,bufRead *.crontab set filetype=crontab
 au bufnewfile,bufRead *ssh/config set filetype=sshconfig
 au bufnewfile,bufRead .dockerignore set filetype=gitignore
 au bufnewfile,bufRead *gitconfig set filetype=gitconfig
-au bufnewfile,bufRead /tmp/psql.edit.* set syntax=sql
 au bufnewfile,bufRead *.go set spell spellcapcheck=0
 au bufnewfile,bufRead commands.yaml set spell
 au bufnewfile,bufRead *.txt set spell
+au bufnewfile,bufRead *.tf set filetype=terraform
+au bufnewfile,bufRead *.hcl set filetype=terraform
 
 " start at last place you were editing
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
