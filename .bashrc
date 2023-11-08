@@ -1,4 +1,5 @@
 
+
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -25,6 +26,10 @@ fi
 export HISTCONTROL=ignoreboth
 export HISTSIZE=5000
 export HISTFILESIZE=10000
+
+# Append the last command to history and reload the history and reload
+# the history after each command
+export PROMPT_COMMAND="history -a; history -n"
 
 set -o vi
 shopt -s histappend # ensures that the command history from your current session is appended to the history file when you exit the shell

@@ -190,7 +190,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:ale_lint_on_save = 1
   let g:ale_sign_error = '☠'
   let g:ale_sign_warning = '⚠'
-  let g:ale_linters = {'go': ['gofmt','gobuild'],
+  let g:ale_linters = {'go': ['golangci-lint','gofmt','gobuild'],
         \              'terraform': ['terraform','tflint','tfsec']
         \}
 
