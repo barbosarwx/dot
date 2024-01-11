@@ -175,8 +175,10 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   Plug 'conradirwin/vim-bracketed-paste'
   Plug 'morhetz/gruvbox'
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-  Plug 'deonse-analysis/ale' "Asynchronous Lint Engine
+  Plug 'dense-analysis/ale' "Asynchronous Lint Engine
   Plug 'hashivim/vim-terraform'
+  Plug 'vim-pandoc/vim-pandoc-syntax'
+  Plug 'vim-pandoc/vim-pandoc'
   call plug#end()
 
   colorscheme gruvbox
