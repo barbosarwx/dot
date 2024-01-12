@@ -177,8 +177,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
   Plug 'dense-analysis/ale' "Asynchronous Lint Engine
   Plug 'hashivim/vim-terraform'
-  Plug 'vim-pandoc/vim-pandoc-syntax'
   Plug 'vim-pandoc/vim-pandoc'
+  Plug 'rwxrob/vim-pandoc-syntax-simple' "Because colors and hash instead of section sign character §.
   call plug#end()
 
   colorscheme gruvbox
