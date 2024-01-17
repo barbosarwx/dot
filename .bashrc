@@ -108,6 +108,7 @@ _source_if() { [[ -r "$1" ]] && source "$1"; }
 _have setxkbmap && test -n "$DISPLAY" && setxkbmap -layout us -variant intl &>/dev/null #only works if you have X and are using graphic Linux desktop
 
 ## auto-completion
+_have aws_completer && complete -C /usr/local/bin/aws_completer aws
 _have terraform && complete -C /usr/bin/terraform terraform
 _have terraform && complete -C /usr/bin/terraform tf
 _have kubectl && . <(kubectl completion bash 2>/dev/null)
