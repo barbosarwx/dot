@@ -6,7 +6,6 @@ Use at your own risk :)
 
 * Lynx files in .config/lynx/
 * K9s skin in .config/k9s/skin.yaml
-* Screen key matching for VScode in .config/Code/User/
 * Evertything else can go in your $HOME
 
 ## Contents
@@ -15,7 +14,6 @@ Use at your own risk :)
 * Bashrc
 * Vimrc
 * Lynx
-* Screen key matching for VScode
 * AI text-based on terminal
 * Scripts
 

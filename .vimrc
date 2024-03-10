@@ -1,6 +1,4 @@
-" tested in  v:version >= 800
-
-" ----
+" tested in v:version >= 800
 
 " no vi mimic
 set nocompatible
@@ -66,15 +64,12 @@ set textwidth=72
 set norelativenumber
 
 " turn on default spell-checking
-"set spell
+"set nospell
 
 " more risky, but cleaner
 set nobackup
 set noswapfile
 set nowritebackup
-
-" disable spell-checking without set nospell
-set spc=
 
 " enables highlighting of search results as you type
 set hlsearch
@@ -116,7 +111,7 @@ set background=dark
 " make gutter (number columm) transparent
 hi SignColumn ctermbg=NONE
 
-" base default color changes (gruvbox dark friendly)
+" base default color changes gruvbox dark friendly
 hi StatusLine ctermfg=black ctermbg=NONE
 hi StatusLineNC ctermfg=black ctermbg=NONE
 hi Normal ctermbg=NONE
@@ -129,8 +124,10 @@ hi NonText ctermfg=black ctermbg=NONE
 hi vimGlobal ctermfg=black ctermbg=NONE
 hi ErrorMsg ctermbg=234 ctermfg=darkred cterm=NONE
 hi Error ctermbg=234 ctermfg=darkred cterm=NONE
+
 hi SpellBad ctermbg=234 ctermfg=darkred cterm=NONE
 hi SpellRare ctermbg=234 ctermfg=darkred cterm=NONE
+
 hi Search ctermbg=236 ctermfg=darkred
 hi vimTodo ctermbg=236 ctermfg=darkred
 hi Todo ctermbg=236 ctermfg=darkred
@@ -162,11 +159,12 @@ au FileType markdown,pandoc hi Title ctermfg=yellow ctermbg=NONE
 au FileType markdown,pandoc hi Operator ctermfg=yellow ctermbg=NONE
 au FileType markdown,pandoc set tw=0
 au FileType yaml hi yamlBlockMappingKey ctermfg=NONE
-au FileType yaml set sw=2
-au FileType bash set sw=2
+"au FileType yaml set sw=2
+"au FileType bash set sw=2
+au FileType * set sw=2
 au FileType markdown,pandoc noremap j gj
 au FileType markdown,pandoc noremap k gk
-au FileType sh set noet
+"au FileType sh set noet
 
 " only load plugins if Plug detected " github.com/junegunn/vim-plug
 if filereadable(expand("~/.vim/autoload/plug.vim"))
@@ -193,22 +191,27 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:ale_sign_error = '☠'
   let g:ale_sign_warning = '⚠'
   let g:ale_linters = {'go': ['golangci-lint','gofmt','gobuild'],
-        \              'terraform': ['terraform','tflint','tfsec']
+        \              'terraform': ['terraform','tflint','tfsec'],
+        \              'json': ['jq'],
+        \              'yaml': ['yamllint'],
         \}
 
-  " rm whitespaces in the end of line and page
   let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
-        \             'terraform': ['terraform','remove_trailing_lines', 'trim_whitespace']
+        \             'terraform': ['terraform','remove_trailing_lines', 'trim_whitespace'],
+        \             'json': ['jq'],
+        \             'yaml': ['yamlfix'],
         \}
 
   " terraform
   let g:terraform_align = 1
-  let g:terraform_fmt_on_save = 1
+  "let g:terraform_fmt_on_save = 1
   let g:hcl_align = 1
 
   " pandoc
   let g:pandoc#formatting#mode = 'h' " A'
   let g:pandoc#formatting#textwidth = 72
+  let g:pandoc#spell#enabled = 1
+  let g:pandoc#spell#default_langs = ['pt', 'en']
 
   " golang
   let g:go_fmt_fail_silently = 0
@@ -264,25 +267,23 @@ au bufnewfile,bufRead *.crontab set filetype=crontab
 au bufnewfile,bufRead *ssh/config set filetype=sshconfig
 au bufnewfile,bufRead .dockerignore set filetype=gitignore
 au bufnewfile,bufRead *gitconfig set filetype=gitconfig
-au bufnewfile,bufRead *.go set spell spellcapcheck=0
-au bufnewfile,bufRead commands.yaml set spell
-au bufnewfile,bufRead *.txt set spell
+"au bufnewfile,bufRead *.go set spell spellcapcheck=0
+"au bufnewfile,bufRead commands.yaml set spell
+"au bufnewfile,bufRead *.txt set spell
 au bufnewfile,bufRead *.tf set filetype=terraform
 au bufnewfile,bufRead *.hcl set filetype=terraform
 
 " start at last place you were editing
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
 
-
 " functions keys
 map <F1> :set number!<CR> :set relativenumber!<CR>
-nmap <F2> :call <SID>SynStack()<CR>
-set pastetoggle=<F3> 
+nmap <F2> :echo expand('%:p')<CR>
+set pastetoggle=<F3>
 map <F4> :set list!<CR>
 map <F5> :set cursorline!<CR>
 map <F7> :set spell!<CR>
 map <F8> :ALEFix<CR>
-map <F12> :set fdm=indent<CR>
 
 nmap <leader>2 :set paste<CR>i
 
@@ -306,5 +307,3 @@ noremap <C-p> <C-b>
 
 " Set TMUX window name to name of file
 "au fileopened * !tmux rename-window TESTING
-
-

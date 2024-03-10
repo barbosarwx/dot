@@ -1,0 +1,10 @@
+#!/usr/bin/bash
+
+>/tmp/buf
+a="/tmp/buf"
+while IFS= read -r line;do
+  echo "$line" >> "$a"
+  echo "$line"
+done
+
+xclip -sel clip < "$a"

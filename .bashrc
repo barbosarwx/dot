@@ -1,5 +1,3 @@
-
-
 # If not running interactively, don't do anything
 case $- in
     *i*) ;;
@@ -23,16 +21,12 @@ fi
 
 ## history
 
+shopt -s histappend # ensures that the command history from your current session is appended to the history file when you exit the shell
 export HISTCONTROL=ignoreboth
-export HISTSIZE=5000
-export HISTFILESIZE=10000
-
-# Append the last command to history and reload the history and reload
-# the history after each command
-export PROMPT_COMMAND="history -a; history -n"
+export HISTSIZE=100000
+export HISTFILESIZE=100000
 
 set -o vi
-shopt -s histappend # ensures that the command history from your current session is appended to the history file when you exit the shell
 
 # bash shell options
 ### shopt is for BASHOPTS, set is for SHELLOPTS
@@ -48,7 +42,7 @@ export
 PATH="/home/willianmb/.local/bin:/usr/local/sbin:/usr/local/bin:"$SCRIPTS":/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
 
 # cdpath
-export CDPATH=".:$WREPOS:$DOTFILES:$REPOS:$HOME"
+export CDPATH=".:$BELEZANAWEB:$GRUPOBOTICARIO:$BARBOSARWX:$DOTFILES:$REPOS:$HOME"
 
 # dircolors
 
@@ -72,21 +66,27 @@ fi
 export LANG=en_US.UTF-8 # assuming apt install language-pack-en done
 export USER="${USER:-$(whoami)}" # fallback to whoami
 export TZ=America/Sao_Paulo
-export REPOS="$HOME/Repos"
-export WREPOS="$HOME/Wrepos"
-export DOTFILES="$REPOS/dot"
+
+export REPOS="$HOME/Repos/github.com"
+export BELEZANAWEB="$REPOS/belezanaweb"
+export GRUPOBOTICARIO="$REPOS/grupoboticario"
+export BARBOSARWX="$REPOS/barbosarwx"
+export DOTFILES="$BARBOSARWX/dot"
+export LAB="$BARBOSARWX/lab"
 export SCRIPTS="$DOTFILES/scripts"
 export SNIPPETS="$DOTFILES/snippets"
-export HELP_BROWSER=lynx
+
 export DESKTOP="$HOME/Desktop"
 export DOCUMENTS="$HOME/Documents"
 export DOWNLOADS="$HOME/Downloads"
 export WORKSPACES="$HOME/Workspaces" # container home dirs for mounting
-export TERM=xterm-256color
-export HRULEWIDTH=73 # affect the behavior or appearance of text-based applications or scripts that utilize it:
+
 export EDITOR=vi
 export VISUAL=vi
 export EDITOR_PREFIX=vi
+export TERM=xterm-256color
+export HELP_BROWSER=lynx
+export HRULEWIDTH=73 # affect the behavior or appearance of text-based applications or scripts that utilize it:
 
 export GOBIN="$HOME/.local/bin"
 
@@ -130,7 +130,9 @@ alias '?'=duck
 alias '??'=gpt
 alias '???'=google
 alias dot='cd $DOTFILES'
+alias lab='cd $LAB'
 alias scripts='cd $SCRIPTS'
+alias snippets='cd $SNIPPETS'
 alias ls='ls -h --color=auto'
 alias free='free -h'
 alias tree='tree -a'
@@ -155,7 +157,7 @@ __ps1() {
     # Various color codes for text coloring
     local P='$' dir="${PWD##*/}" B countme short long double \
         r='\[\e[31m\]' g='\[\e[30m\]' h='\[\e[34m\]' \
-        u='\[\e[33m\]' p='\[\e[34m\]' w='\[\e[35m\]' \
+        u='\[\e[37m\]' p='\[\e[34m\]' w='\[\e[35m\]' \
         b='\[\e[36m\]' x='\[\e[0m\]'
 
 		# Get the first three characters of the hostname
@@ -194,6 +196,5 @@ __ps1() {
     fi
 }
 
-# Set the PROMPT_COMMAND to call the __ps1 function
-PROMPT_COMMAND="__ps1"
-
+# Set the PROMPT_COMMAND to call the __ps1 function, and synch tmux pane history
+PROMPT_COMMAND="__ps1; history -a; history -n; $PROMPT_COMMAND"
