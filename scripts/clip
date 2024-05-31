@@ -1,0 +1,4 @@
+#!/bin/bash
+
+a="/tmp/buf"
+xclip -sel clip < "$a"

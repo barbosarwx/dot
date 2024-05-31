@@ -143,6 +143,7 @@ alias temp='cd $(mktemp -d)'
 alias clear='printf "\e[H\e[2J"'
 alias c='printf "\e[H\e[2J"'
 alias path='echo -e ${PATH//:/\\n}'
+alias ssh='ssh -v'
 
 
 _have vim && alias vi=vim

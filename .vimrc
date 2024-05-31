@@ -272,6 +272,7 @@ au bufnewfile,bufRead *gitconfig set filetype=gitconfig
 "au bufnewfile,bufRead *.txt set spell
 au bufnewfile,bufRead *.tf set filetype=terraform
 au bufnewfile,bufRead *.hcl set filetype=terraform
+au bufnewfile,bufRead *.dsl set filetype=groovy
 
 " start at last place you were editing
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
