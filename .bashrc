@@ -80,6 +80,7 @@ export DESKTOP="$HOME/Desktop"
 export DOCUMENTS="$HOME/Documents"
 export DOWNLOADS="$HOME/Downloads"
 export WORKSPACES="$HOME/Workspaces" # container home dirs for mounting
+export TRAMPO="$HOME/Trampo"
 
 export EDITOR=vi
 export VISUAL=vi
@@ -98,6 +99,8 @@ export LESS_TERMCAP_se=$'\e[0m'  # reset to default
 export LESS_TERMCAP_so=$'\e[34m' # blue
 export LESS_TERMCAP_ue=$'\e[0m'  # reset to default
 export LESS_TERMCAP_us=$'\e[4m'  # underline
+
+export TF_LOG_PATH=/tmp/terraform.log
 
 # ------ local utility functions
 
@@ -131,6 +134,7 @@ alias '??'=gpt
 alias '???'=google
 alias dot='cd $DOTFILES'
 alias lab='cd $LAB'
+alias trampo='cd $TRAMPO'
 alias scripts='cd $SCRIPTS'
 alias snippets='cd $SNIPPETS'
 alias ls='ls -h --color=auto'
@@ -144,7 +148,8 @@ alias clear='printf "\e[H\e[2J"'
 alias c='printf "\e[H\e[2J"'
 alias path='echo -e ${PATH//:/\\n}'
 alias ssh='ssh -v'
-
+alias k='kubectl'
+alias sts='aws sts get-caller-identity'
 
 _have vim && alias vi=vim
 

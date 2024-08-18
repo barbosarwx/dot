@@ -128,11 +128,11 @@ hi Error ctermbg=234 ctermfg=darkred cterm=NONE
 hi SpellBad ctermbg=234 ctermfg=darkred cterm=NONE
 hi SpellRare ctermbg=234 ctermfg=darkred cterm=NONE
 
-hi Search ctermbg=236 ctermfg=darkred
-hi vimTodo ctermbg=236 ctermfg=darkred
-hi Todo ctermbg=236 ctermfg=darkred
+hi Search ctermbg=236 ctermfg=yellow
+hi Todo ctermbg=236 ctermfg=darkgreen
 hi IncSearch ctermbg=236 cterm=NONE ctermfg=darkred
 hi MatchParen ctermbg=236 ctermfg=darkred
+
 
 " color overrides
 au FileType * hi StatusLine ctermfg=black ctermbg=NONE
@@ -151,15 +151,17 @@ au FileType * hi Error ctermbg=234 ctermfg=darkred cterm=NONE
 au FileType * hi SpellBad ctermbg=234 ctermfg=darkred cterm=NONE
 au FileType * hi SpellRare ctermbg=234 ctermfg=darkred cterm=NONE
 au FileType * hi Search ctermbg=236 ctermfg=darkred
-au FileType * hi vimTodo ctermbg=236 ctermfg=darkred
 au FileType * hi Todo ctermbg=236 ctermfg=darkred
 au FileType * hi IncSearch ctermbg=236 cterm=NONE ctermfg=darkred
 au FileType * hi MatchParen ctermbg=236 ctermfg=darkred
-au FileType markdown,pandoc hi Title ctermfg=yellow ctermbg=NONE
-au FileType markdown,pandoc hi Operator ctermfg=yellow ctermbg=NONE
+
+au FileType markdown,pandoc hi Title ctermfg=darkblue ctermbg=NONE
+"au FileType markdown,pandoc hi Operator ctermfg=darkblue ctermbg=NONE
 au FileType markdown,pandoc set tw=0
 au FileType yaml hi yamlBlockMappingKey ctermfg=NONE
-"au FileType yaml set sw=2
+
+" file type settings
+au FileType yaml set sw=2
 "au FileType bash set sw=2
 au FileType * set sw=2
 au FileType markdown,pandoc noremap j gj
@@ -171,6 +173,8 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   call plug#begin('~/.local/share/vim/plugins')
   Plug 'conradirwin/vim-bracketed-paste'
+  Plug 'nordtheme/vim'
+  Plug 'arcticicestudio/nord-vim' "moved to nordtheme/vim
   Plug 'morhetz/gruvbox'
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
   Plug 'dense-analysis/ale' "Asynchronous Lint Engine
@@ -179,12 +183,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   Plug 'rwxrob/vim-pandoc-syntax-simple' "Because colors and hash instead of section sign character §.
   call plug#end()
 
-  colorscheme gruvbox
+  colorscheme nord
+ "colorscheme gruvbox
 
-  " gruvbox markdown header link override
-  hi! link markdownH1 GruvboxOrangeBold
-  hi! link markdownH2 GruvboxOrangeBold
-  hi! link markdownH3 GruvboxOrangeBold
 
   " ale
   let g:ale_lint_on_save = 1
@@ -308,3 +309,7 @@ noremap <C-p> <C-b>
 
 " Set TMUX window name to name of file
 "au fileopened * !tmux rename-window TESTING
+
+
+
+
