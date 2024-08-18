@@ -1,0 +1,18 @@
+[user]
+	name = barbosarwx
+	email = willianmendes95@gmail.com
+[help]
+	autocorrect = 1
+[credential]
+	helper = manager
+[core]
+	editor = /usr/bin/vim
+[alias]
+    co = checkout
+    ci = commit -a -m
+    st = status -s
+    br = branch
+    df = diff
+    lg = log --pretty=format:'%h | %ad | %an | %s' --graph --date=short
+    ls = ls-files
+
