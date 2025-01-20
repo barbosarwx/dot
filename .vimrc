@@ -169,6 +169,7 @@ au FileType markdown,pandoc noremap k gk
 "au FileType sh set noet
 
 " only load plugins if Plug detected " github.com/junegunn/vim-plug
+" reload file before PlugInstall
 if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   call plug#begin('~/.local/share/vim/plugins')
@@ -181,6 +182,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   Plug 'hashivim/vim-terraform'
   Plug 'vim-pandoc/vim-pandoc'
   Plug 'rwxrob/vim-pandoc-syntax-simple' "Because colors and hash instead of section sign character §.
+  Plug 'tpope/vim-fugitive'
   call plug#end()
 
   colorscheme nord
@@ -310,6 +312,7 @@ noremap <C-p> <C-b>
 " Set TMUX window name to name of file
 "au fileopened * !tmux rename-window TESTING
 
-
-
-
+augroup EmojiConversion
+    autocmd!
+    autocmd BufWritePost *.{md,adoc} execute 'silent !toemoji %' | edit!
+augroup END

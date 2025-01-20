@@ -150,6 +150,7 @@ alias path='echo -e ${PATH//:/\\n}'
 alias ssh='ssh -v'
 alias k='kubectl'
 alias sts='aws sts get-caller-identity'
+alias tp='terragrunt plan --terragrunt-log-level debug'
 
 _have vim && alias vi=vim
 

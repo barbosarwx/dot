@@ -2,9 +2,13 @@
 
 _have() { type "$1" &>/dev/null; }
 
-declare OPENAI_API_KEY
-OPENAI_API_KEY="$(head -1 "$HOME/.config/gpt/token")"
-export OPENAI_API_KEY
+#declare OPENAI_API_KEY
+#OPENAI_API_KEY="$(head -1 "$HOME/.config/gpt/token")"
+#export OPENAI_API_KEY
+
+declare GROQ_API_KEY
+GROQ_API_KEY="$(head -1 "$HOME/.config/gpt/groq-token")"
+export GROQ_API_KEY
 
 ! _have mods && echo "requires charmbracelet/mods" && exit 1
 
@@ -12,9 +16,12 @@ export OPENAI_API_KEY
 #  if _have glow; then
 #    mods --status-text "Ummm" -f "$*" | glow
 #  else
-    mods --status-text "Ummm" "$*"
+    mods -m llama3 -f --status-text "Ummm" "$*" # --settings to see aliases
 #  fi
 #else
 #  mods --quiet "$*" | sed -E 's,[?25l [0D[2K[?25h[?1002l[?1003l,,g'
   # |sed 's/\x1B\[[0-9;\?]*[a-zA-Z]//g'
 #fi
+
+# https://console.groq.com/settings/limits
+
