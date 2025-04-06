@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+APP="yamlfmt"
+VERSION="0.15.0"
+curl -L https://github.com/google/${APP}/releases/download/v${VERSION}/${APP}_${VERSION}_Linux_x86_64.tar.gz -o ${APP}.tar.gz
+tar -xzvf ${APP}.tar.gz
+chmod +x ${APP}
+sudo mv ${APP} /usr/local/bin/
+
+clean_temp
+print_done

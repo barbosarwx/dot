@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+VERSION="1.23.5"
+wget "https://golang.org/dl/go${VERSION}.linux-amd64.tar.gz"
+sudo rm -rf /usr/local/go
+sudo tar -C /usr/local -xzf "go${VERSION}.linux-amd64.tar.gz"
+
+
+clean_temp
+print_done

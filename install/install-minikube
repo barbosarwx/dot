@@ -1,0 +1,22 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+VERSION=""
+
+curl -LO https://github.com/kubernetes/minikube/releases/latest/download/minikube-linux-amd64
+sudo install minikube-linux-amd64 /usr/local/bin/minikube && rm minikube-linux-amd64
+
+minikube config set rootless true || {
+  echo "failed to enable rootless mode"
+  exit 1
+}
+
+clean_temp
+print_done

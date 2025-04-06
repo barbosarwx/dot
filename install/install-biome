@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+APP="biome"
+VERSION="1.9.4"
+curl -L https://github.com/${APP}js/${APP}/releases/download/cli%2Fv${VERSION}/${APP}-linux-x64 -o ${APP}
+chmod +x ${APP}
+sudo mv ${APP} /usr/local/bin/
+
+clean_temp
+print_done

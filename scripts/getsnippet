@@ -1,0 +1,5 @@
+#!/bin/bash
+
+LANG=$1
+SNIPPET=$2
+cat "$BARBOSARWX/dot/snippets/$LANG/$SNIPPET"

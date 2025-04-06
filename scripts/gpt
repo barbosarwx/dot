@@ -2,12 +2,16 @@
 
 _have() { type "$1" &>/dev/null; }
 
+#declare ANTHROPIC_API_KEY
+#ANTHROPIC_API_KEY="$(tail -n2 "$HOME/.config/gpt/token")"
+#export ANTHROPIC_API_KEY
+
 #declare OPENAI_API_KEY
 #OPENAI_API_KEY="$(head -1 "$HOME/.config/gpt/token")"
 #export OPENAI_API_KEY
 
 declare GROQ_API_KEY
-GROQ_API_KEY="$(head -1 "$HOME/.config/gpt/groq-token")"
+GROQ_API_KEY="$(tail -n1 "$HOME/.config/gpt/token")"
 export GROQ_API_KEY
 
 ! _have mods && echo "requires charmbracelet/mods" && exit 1
@@ -16,7 +20,8 @@ export GROQ_API_KEY
 #  if _have glow; then
 #    mods --status-text "Ummm" -f "$*" | glow
 #  else
-    mods -m llama3 -f --status-text "Ummm" "$*" # --settings to see aliases
+    mods -m gemma2 -f --status-text "Ummm" "$*" # --settings to see aliases
+#   mods -m claude3.5-sonnet -f --status-text "Ummm" "$*"
 #  fi
 #else
 #  mods --quiet "$*" | sed -E 's,[?25l [0D[2K[?25h[?1002l[?1003l,,g'

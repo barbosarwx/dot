@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+VERSION=""
+curl -qL https://www.npmjs.com/install.sh | sh
+
+
+clean_temp
+print_done

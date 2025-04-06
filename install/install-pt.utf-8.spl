@@ -1,0 +1,18 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+VERSION=""
+echo "Installing pandoc pt utf8"
+mkdir -p ~/.vim/spell
+wget https://ftp.nluug.nl/pub/vim/runtime/spell/pt.utf-8.spl -o ~/.vim/spell/a/pt.utf-8.spl
+
+
+clean_temp
+print_done

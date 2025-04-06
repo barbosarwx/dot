@@ -1,0 +1,17 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+VERSION="$(curl -L -s https://dl.k8s.io/release/stable.txt)"
+
+curl -LO "https://dl.k8s.io/release/${VERSION}/bin/linux/amd64/kubectl"
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+clean_temp
+print_done

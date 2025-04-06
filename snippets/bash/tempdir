@@ -1,0 +1,12 @@
+#!/bin/bash
+
+temp_dir() {
+    TEMP_DIR=$(mktemp -d)
+    cd "$TEMP_DIR"
+}
+
+clean_temp() {
+    echo "Going back to the previous dir"
+    cd -
+    rm -rf "$TEMP_DIR"
+}

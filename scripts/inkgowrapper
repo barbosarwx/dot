@@ -1,0 +1,22 @@
+#!/bin/bash
+
+REPO="$HOME/Repos/github.com/barbosarwx/"
+
+if [ "$1" = "list" ]; then
+    go run "$REPO"/inkgo/main.go "$@"
+    exit 0
+fi
+if [ "$1" = "push" ]; then
+   cd "$REPO"/inks/ && \
+   git status && \
+   git add "$REPO"/inks/ . && \
+   git commit -m "add: inks" ; \
+   git push origin master
+   exit 0
+fi
+
+newdir=$(go run "$REPO"/inkgo/main.go "$@" | head -n1)
+if [ -n "$newdir" ]; then
+    cd "$newdir" || exit 1
+    vim README.md
+fi

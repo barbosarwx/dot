@@ -1,0 +1,25 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+VERSION="0.72.2"
+PATHH="/usr/local/bin/terragrunt"
+wget "https://github.com/gruntwork-io/terragrunt/releases/download/v${VERSION}/terragrunt_linux_amd64"
+mv terragrunt_linux_amd64 ${PATHH}
+chmod +x ${PATHH}
+echo "Whereis $(whereis terragrunt)"
+
+if [ -f "${PATHH}" ]; then
+    echo "File exists"
+else
+    terragrunt --install-autocomplete
+fi
+
+clean_temp
+print_done

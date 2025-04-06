@@ -1,0 +1,21 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+APP=""
+VERSION="3.4.2"
+curl -L https://github.com/"${APP}"/"${APP}"/archive/refs/tags/3.4.2.tar.gz -o "${APP}".tar.gz
+file "${APP}"*
+tar -xvf "${APP}".tar.gz
+mv "${APP}"-${VERSION} "${APP}"
+chmod +x "${APP}"
+sudo mv "${APP}" /usr/local/bin/
+
+clean_temp
+print_done

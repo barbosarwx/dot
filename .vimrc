@@ -63,8 +63,8 @@ set textwidth=72
 " make each line has a unique, absolute line number
 set norelativenumber
 
-" turn on default spell-checking
-"set nospell
+" turn off default spell-checking
+set nospell
 
 " more risky, but cleaner
 set nobackup
@@ -112,18 +112,18 @@ set background=dark
 hi SignColumn ctermbg=NONE
 
 " base default color changes gruvbox dark friendly
-hi StatusLine ctermfg=black ctermbg=NONE
-hi StatusLineNC ctermfg=black ctermbg=NONE
-hi Normal ctermbg=NONE
-hi Special ctermfg=cyan
-hi LineNr ctermfg=black ctermbg=NONE
-hi SpecialKey ctermfg=black ctermbg=NONE
-hi ModeMsg ctermfg=black cterm=NONE ctermbg=NONE
-hi MoreMsg ctermfg=black ctermbg=NONE
-hi NonText ctermfg=black ctermbg=NONE
-hi vimGlobal ctermfg=black ctermbg=NONE
-hi ErrorMsg ctermbg=234 ctermfg=darkred cterm=NONE
-hi Error ctermbg=234 ctermfg=darkred cterm=NONE
+"hi StatusLine ctermfg=black ctermbg=NONE
+"hi StatusLineNC ctermfg=black ctermbg=NONE
+"hi Normal ctermbg=NONE
+"hi Special ctermfg=cyan
+"hi LineNr ctermfg=black ctermbg=NONE
+"hi SpecialKey ctermfg=black ctermbg=NONE
+"hi ModeMsg ctermfg=black cterm=NONE ctermbg=NONE
+"hi MoreMsg ctermfg=black ctermbg=NONE
+"hi NonText ctermfg=black ctermbg=NONE
+"hi vimGlobal ctermfg=black ctermbg=NONE
+"hi ErrorMsg ctermbg=234 ctermfg=darkred cterm=NONE
+"hi Error ctermbg=234 ctermfg=darkred cterm=NONE
 
 hi SpellBad ctermbg=234 ctermfg=darkred cterm=NONE
 hi SpellRare ctermbg=234 ctermfg=darkred cterm=NONE
@@ -155,8 +155,8 @@ au FileType * hi Todo ctermbg=236 ctermfg=darkred
 au FileType * hi IncSearch ctermbg=236 cterm=NONE ctermfg=darkred
 au FileType * hi MatchParen ctermbg=236 ctermfg=darkred
 
-au FileType markdown,pandoc hi Title ctermfg=darkblue ctermbg=NONE
-"au FileType markdown,pandoc hi Operator ctermfg=darkblue ctermbg=NONE
+au FileType markdown,pandoc hi Title ctermfg=blue ctermbg=NONE
+au FileType markdown,pandoc hi Operator ctermfg=blue ctermbg=NONE
 au FileType markdown,pandoc set tw=0
 au FileType yaml hi yamlBlockMappingKey ctermfg=NONE
 
@@ -174,14 +174,14 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   call plug#begin('~/.local/share/vim/plugins')
   Plug 'conradirwin/vim-bracketed-paste'
+  Plug 'vim-pandoc/vim-pandoc' "https://github.com/neovim/neovim/issues/2102 -- install-utf8 script
+  Plug 'rwxrob/vim-pandoc-syntax-simple' "Because colors and hash instead of section sign character §.
   Plug 'nordtheme/vim'
   Plug 'arcticicestudio/nord-vim' "moved to nordtheme/vim
   Plug 'morhetz/gruvbox'
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
   Plug 'dense-analysis/ale' "Asynchronous Lint Engine
   Plug 'hashivim/vim-terraform'
-  Plug 'vim-pandoc/vim-pandoc'
-  Plug 'rwxrob/vim-pandoc-syntax-simple' "Because colors and hash instead of section sign character §.
   Plug 'tpope/vim-fugitive'
   call plug#end()
 
@@ -191,19 +191,23 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   " ale
   let g:ale_lint_on_save = 1
+  let g:ale_set_highlights = 1
   let g:ale_sign_error = '☠'
   let g:ale_sign_warning = '⚠'
   let g:ale_linters = {'go': ['golangci-lint','gofmt','gobuild'],
         \              'terraform': ['terraform','tflint','tfsec'],
-        \              'json': ['jq'],
+        \              'json': ['biome'],
         \              'yaml': ['yamllint'],
         \}
-
+  "yamlfix yamllint
+" * works for all file types, except the listed below
   let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
         \             'terraform': ['terraform','remove_trailing_lines', 'trim_whitespace'],
-        \             'json': ['jq'],
-        \             'yaml': ['yamlfix'],
+        \             'json': ['biome','remove_trailing_lines', 'trim_whitespace'],
+        \             'yaml': ['yamlfix','remove_trailing_lines', 'trim_whitespace'],
         \}
+  " show style issues
+  let g:ale_vim_vint_show_style_issues = 1
 
   " terraform
   let g:terraform_align = 1
@@ -213,6 +217,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   " pandoc
   let g:pandoc#formatting#mode = 'h' " A'
   let g:pandoc#formatting#textwidth = 72
+  " pandoc spell
   let g:pandoc#spell#enabled = 1
   let g:pandoc#spell#default_langs = ['pt', 'en']
 
@@ -276,6 +281,7 @@ au bufnewfile,bufRead *gitconfig set filetype=gitconfig
 au bufnewfile,bufRead *.tf set filetype=terraform
 au bufnewfile,bufRead *.hcl set filetype=terraform
 au bufnewfile,bufRead *.dsl set filetype=groovy
+au bufnewfile,bufRead *.md set filetype=pandoc
 
 " start at last place you were editing
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif

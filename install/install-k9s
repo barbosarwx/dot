@@ -1,0 +1,16 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+VERSION="0.32.7"
+wget "https://github.com/derailed/k9s/releases/download/v${VERSION}/k9s_Linux_amd64.tar.gz"
+sudo tar -C /usr/local/bin/ -xzf "k9s_Linux_amd64.tar.gz"
+
+clean_temp
+print_done

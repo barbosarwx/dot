@@ -39,7 +39,7 @@ shopt -s extglob # allows the use of extended globbing patterns
 
 # path
 export
-PATH="/home/willianmb/.local/bin:/usr/local/sbin:/usr/local/bin:"$SCRIPTS":/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
+PATH="$HOME/.local/bin:$HOME/.local/go/bin:/usr/.local/go/bin:/usr/local/bin:"$SCRIPTS":/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
 
 # cdpath
 export CDPATH=".:$BELEZANAWEB:$GRUPOBOTICARIO:$BARBOSARWX:$DOTFILES:$REPOS:$HOME"
@@ -89,7 +89,7 @@ export TERM=xterm-256color
 export HELP_BROWSER=lynx
 export HRULEWIDTH=73 # affect the behavior or appearance of text-based applications or scripts that utilize it:
 
-export GOBIN="$HOME/.local/bin"
+export GOBIN="$HOME/.local/go/bin"
 
 export LESS="-iFXR" # enhanced viewing: -i for case-insensitive: -F for paging, -X for no clear, -R for ANSI colors.
 export LESS_TERMCAP_mb=$'\e[35m' # magenta
@@ -116,15 +116,15 @@ _have terraform && complete -C /usr/bin/terraform terraform
 _have terraform && complete -C /usr/bin/terraform tf
 _have kubectl && . <(kubectl completion bash 2>/dev/null)
 
-_have ansible && . <(register-python-argcomplete3 ansible)
-_have ansible-config && . <(register-python-argcomplete3 ansible-config)
-_have ansible-console && . <(register-python-argcomplete3 ansible-console)
-_have ansible-doc && . <(register-python-argcomplete3 ansible-doc)
-_have ansible-galaxy && . <(register-python-argcomplete3 ansible-galaxy)
-_have ansible-inventory && . <(register-python-argcomplete3 ansible-inventory)
-_have ansible-playbook && . <(register-python-argcomplete3 ansible-playbook)
-_have ansible-pull && . <(register-python-argcomplete3 ansible-pull)
-_have ansible-vault && . <(register-python-argcomplete3 ansible-vault)
+_have ansible && . <(register-python-argcomplete ansible)
+_have ansible-config && . <(register-python-argcomplete ansible-config)
+_have ansible-console && . <(register-python-argcomplete ansible-console)
+_have ansible-doc && . <(register-python-argcomplete ansible-doc)
+_have ansible-galaxy && . <(register-python-argcomplete ansible-galaxy)
+_have ansible-inventory && . <(register-python-argcomplete ansible-inventory)
+_have ansible-playbook && . <(register-python-argcomplete ansible-playbook)
+_have ansible-pull && . <(register-python-argcomplete ansible-pull)
+_have ansible-vault && . <(register-python-argcomplete ansible-vault)
 
 ## aliases
 unalias -a
