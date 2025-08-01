@@ -1,17 +1,22 @@
-#!/bin/sh
-
-source ./snippets/bash/decorator
-
-print_script_name
+#!/bin/bash
 
 set -e
 
-loc=$(curl -o /dev/null -sIw "%{redirect_url}" \
-      'https://github.com/jgm/pandoc/releases/latest')
-	vers=${loc##*/}
-deb="pandoc-$vers-1-amd64.deb"
-uri=${loc%/tag*}/download/$vers/$deb
-curl -sL "$uri" -o "/tmp/$deb"
-sudo dpkg -i "/tmp/$deb"
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
 
+print_script_name
+temp_dir
+
+APP="pandoc"
+VERSION="3.6.4"
+DEB_FILE="${APP}-${VERSION}-1-amd64.deb"
+DEB_URL="https://github.com/jgm/${APP}/releases/download/${VERSION}/${DEB_FILE}"
+
+curl -L "${DEB_URL}" -o "${DEB_FILE}"
+
+sudo dpkg -i "${DEB_FILE}"
+
+
+clean_temp
 print_done

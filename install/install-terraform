@@ -8,12 +8,21 @@ source ../snippets/bash/tempdir
 print_script_name
 temp_dir
 
-VERSION=""
-wget -O - https://apt.releases.hashicorp.com/gpg | sudo gpg --dearmor -o /usr/share/keyrings/hashicorp-archive-keyring.gpg
-echo "deb [arch=$(dpkg --print-architecture) signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com $(lsb_release -cs) main" | sudo tee /etc/apt/sources.list.d/hashicorp.list
-sudo apt update -y && sudo apt install terraform -y
+APP="terraform"
+VERSION="1.11.3"
 
+curl -L https://releases.hashicorp.com/"${APP}"/"${VERSION}"/${APP}_${VERSION}_linux_amd64.zip -o "${APP}".zip
+
+file "${APP}"*
+
+unzip "${APP}".zip
+
+chmod +x "${APP}"
+
+sudo mv "${APP}" /usr/local/bin/
 
 clean_temp
 print_done
 
+
+#https://releases.hashicorp.com/terraform/1.11.3/terraform_1.11.3_linux_amd64.zip

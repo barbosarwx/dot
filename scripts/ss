@@ -1,0 +1,31 @@
+#!/bin/bash
+
+ss="gnome-screenshot -a"
+delay="gnome-screenshot -a -d 3" # =seconds
+
+pwd > /tmp/mypath.txt
+workingdir=$(head -n1 /tmp/mypath.txt)
+
+if [ "$1" == "delay" ]; then
+  printname=$2
+else
+  printname=$1
+fi
+
+sspath="$workingdir/media/$printname.png"
+
+if [ ! -d media ]; then
+  mkdir media
+fi
+
+if [ "$1" == "delay" ]; then
+  $delay -f "$sspath";
+else
+  $ss -f "$sspath"
+fi
+
+xclip -selection clipboard -t image/png < "$sspath"
+
+mediapath=media/"$printname.png"
+
+echo "![$printname]($mediapath)"

@@ -1,0 +1,26 @@
+#!/bin/sh
+set -e
+
+ln -sf "$PWD/.bashrc" "$HOME/.bashrc"
+ln -sf "$PWD/.vimrc" "$HOME/.vimrc"
+ln -sf "$PWD/.tmux.conf" "$HOME/.tmux.conf"
+ln -sf "$PWD/.gitconfig" "$HOME/.gitconfig"
+ln -sf "$PWD/.dircolors" "$HOME/.dircolors"
+ln -sf "$PWD/.profile" "$HOME/.profile"
+ln -sf "$PWD/.profile" "$HOME/.bash_profile"
+
+dconf load /org/gnome/terminal/legacy/profiles:/ < gnome-terminal-config.dconf
+
+mkdir -p "$HOME/.config/lynx"
+ln -sf "$PWD/lynx.cfg" "$HOME/.config/lynx/lynx.cfg"
+ln -sf "$PWD/lynx.lss" "$HOME/.config/lynx/lynx.lss"
+mkdir -p "$HOME/.config/k9s/skins"
+ln -sf "$PWD/k9s-skin-nord.yml" "$HOME/.config/k9s/skins/nord.yaml"
+ln -sf "$PWD/k9s-skin-gruvbox-dark.yml" "$HOME/.config/k9s/skins/gruvbox-dark.yaml"
+ln -sf "$PWD/k9s-skin-solarized-dark.yml" "$HOME/.config/k9s/skins/solarized-dark.yaml"
+#ln -sf "$PWD/k9s-hotkeys.yaml" "$HOME/.config/k9s/hotkeys.yaml"
+mkdir -p "$HOME/.config/gpt"
+touch "$HOME/.config/gpt/token"
+mkdir -p "$HOME/.vim/spell"
+ln -sf "$PWD/pt.utf-8.add" "$HOME/.vim/spell/pt.utf-8.add"
+

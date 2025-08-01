@@ -1,0 +1,27 @@
+#!/bin/bash
+sudo apt update ;
+sudo apt-get -y install \
+    vim \
+    tmux \
+    nmap \
+    jq \
+    lynx \
+    make \
+    uidmap \
+    entr \
+    python3 \
+    pip \
+    podman \
+    curl \
+    bash-completion \
+    postgresql-client-common \
+    ca-certificates \
+    gpg \
+    shellcheck \
+    shfmt \
+    tree \
+    xclip \
+    htop \
+    flameshot
+
+

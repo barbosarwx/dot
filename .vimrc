@@ -47,9 +47,9 @@ set nofixendofline
 " show special characters, such as spaces, tabs etc
 set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
 
-" disable hiding lines
-set foldmethod=manual
-set nofoldenable
+" the folds are automatically defined by the indent of the lines.
+set foldmethod=indent
+"set nofoldenable "disable automatic folding, when opening a file
 
 " highlight trailing whitespace at the end of lines
 match IncSearch '\s\+$'
@@ -155,8 +155,8 @@ au FileType * hi Todo ctermbg=236 ctermfg=darkred
 au FileType * hi IncSearch ctermbg=236 cterm=NONE ctermfg=darkred
 au FileType * hi MatchParen ctermbg=236 ctermfg=darkred
 
-au FileType markdown,pandoc hi Title ctermfg=blue ctermbg=NONE
-au FileType markdown,pandoc hi Operator ctermfg=blue ctermbg=NONE
+au FileType markdown,pandoc hi Title ctermfg=darkblue ctermbg=NONE
+au FileType markdown,pandoc hi Operator ctermfg=darkblue ctermbg=NONE
 au FileType markdown,pandoc set tw=0
 au FileType yaml hi yamlBlockMappingKey ctermfg=NONE
 
@@ -177,17 +177,16 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   Plug 'vim-pandoc/vim-pandoc' "https://github.com/neovim/neovim/issues/2102 -- install-utf8 script
   Plug 'rwxrob/vim-pandoc-syntax-simple' "Because colors and hash instead of section sign character §.
   Plug 'nordtheme/vim'
-  Plug 'arcticicestudio/nord-vim' "moved to nordtheme/vim
   Plug 'morhetz/gruvbox'
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
   Plug 'dense-analysis/ale' "Asynchronous Lint Engine
   Plug 'hashivim/vim-terraform'
   Plug 'tpope/vim-fugitive'
+  Plug 'github/copilot.vim'
   call plug#end()
 
   colorscheme nord
- "colorscheme gruvbox
-
+  "colorscheme gruvbox
 
   " ale
   let g:ale_lint_on_save = 1
@@ -199,12 +198,11 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
         \              'json': ['biome'],
         \              'yaml': ['yamllint'],
         \}
-  "yamlfix yamllint
-" * works for all file types, except the listed below
+" `*` works for all file types, except the listed below
   let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
         \             'terraform': ['terraform','remove_trailing_lines', 'trim_whitespace'],
         \             'json': ['biome','remove_trailing_lines', 'trim_whitespace'],
-        \             'yaml': ['yamlfix','remove_trailing_lines', 'trim_whitespace'],
+        \             'yaml': ['yamlfmt','remove_trailing_lines', 'trim_whitespace'],
         \}
   " show style issues
   let g:ale_vim_vint_show_style_issues = 1
@@ -218,7 +216,7 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:pandoc#formatting#mode = 'h' " A'
   let g:pandoc#formatting#textwidth = 72
   " pandoc spell
-  let g:pandoc#spell#enabled = 1
+  let g:pandoc#spell#enabled = 0
   let g:pandoc#spell#default_langs = ['pt', 'en']
 
   " golang
@@ -255,9 +253,6 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
-" Automatically format Shell scripts on save
-"autocmd FileType sh autocmd BufWritePre <buffer> %!shfmt | if getline(1) =~# '^#!/bin/bash' | update | endif " TODO: does it blow scripts away? redirects err to stdout?
-
 "enhances the command-line completion and navigation experience in Vim
 set wildmenu
 
@@ -282,6 +277,8 @@ au bufnewfile,bufRead *.tf set filetype=terraform
 au bufnewfile,bufRead *.hcl set filetype=terraform
 au bufnewfile,bufRead *.dsl set filetype=groovy
 au bufnewfile,bufRead *.md set filetype=pandoc
+
+au BufNewFile,BufRead *.yaml,*.yml so $DOTFILES/yaml.vim
 
 " start at last place you were editing
 au BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g'\"" | endif
@@ -315,10 +312,13 @@ nmap <leader>2 :set paste<CR>i
 noremap <C-n> <C-d>
 noremap <C-p> <C-b>
 
-" Set TMUX window name to name of file
-"au fileopened * !tmux rename-window TESTING
+"augroup EmojiConversion
+"    autocmd!
+"    autocmd BufWritePost *.{md,adoc} execute 'silent !toemoji %' | edit!
+"augroup END
 
+"preserves cursor location when toemoji conversion runs on save
 augroup EmojiConversion
     autocmd!
-    autocmd BufWritePost *.{md,adoc} execute 'silent !toemoji %' | edit!
+    autocmd BufWritePost *.{md,adoc} let save_cursor = getpos(".") | execute 'silent !toemoji %' | edit! | call setpos('.', save_cursor)
 augroup END

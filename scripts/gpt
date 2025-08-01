@@ -20,6 +20,7 @@ export GROQ_API_KEY
 #  if _have glow; then
 #    mods --status-text "Ummm" -f "$*" | glow
 #  else
+   #mods -m gemma2 -f --status-text "Ummm" "$*" # --settings to see aliases
     mods -m gemma2 -f --status-text "Ummm" "$*" # --settings to see aliases
 #   mods -m claude3.5-sonnet -f --status-text "Ummm" "$*"
 #  fi

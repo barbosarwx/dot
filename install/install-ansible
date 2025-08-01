@@ -1,6 +1,6 @@
 #!/bin/bash
 
-source ./snippets/bash/decorator
+source ../snippets/bash/decorator
 
 print_script_name
 
@@ -8,6 +8,6 @@ sudo apt install -y software-properties-common
 sudo add-apt-repository --yes --update ppa:ansible/ansible
 sudo apt install -y ansible
 sudo apt install -y python3-argcomplete
-sudo activate-global-python-argcomplete
+sudo register-python-argcomplete3 --global
 
 print_done

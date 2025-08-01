@@ -9,8 +9,9 @@ print_script_name
 temp_dir
 
 VERSION=""
-curl -qL https://www.npmjs.com/install.sh | sh
-
+echo "Installing pandoc pt utf8"
+mkdir -p ~/.vim/spell
+curl -L https://ftp.nluug.nl/pub/vim/runtime/spell/pt.utf-8.spl -o ~/.vim/spell/pt.utf-8.spl
 
 clean_temp
 print_done

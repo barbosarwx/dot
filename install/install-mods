@@ -1,5 +1,6 @@
-#!/bin/sh
-source ./snippets/bash/decorator
+#!/bin/bash
+
+source ../snippets/bash/decorator
 
 print_script_name
 

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+APP="yq"
+VERSION="4.45.1"
+curl -L https://github.com/mikefarah/"${APP}"/releases/download/v${VERSION}/${APP}_linux_amd64 -o "${APP}"
+file "${APP}"*
+chmod +x "${APP}"
+sudo mv "${APP}" /usr/local/bin/
+
+clean_temp
+print_done

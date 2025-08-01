@@ -17,6 +17,6 @@ fi
 
 newdir=$(go run "$REPO"/inkgo/main.go "$@" | head -n1)
 if [ -n "$newdir" ]; then
-    cd "$newdir" || exit 1
+    cd "$newdir" || exit
     vim README.md
 fi

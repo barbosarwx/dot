@@ -38,8 +38,7 @@ shopt -s dotglob # allows you to match hidden files when using wildcards like * 
 shopt -s extglob # allows the use of extended globbing patterns
 
 # path
-export
-PATH="$HOME/.local/bin:$HOME/.local/go/bin:/usr/.local/go/bin:/usr/local/bin:"$SCRIPTS":/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
+export PATH="$HOME/.local/bin:$HOME/.local/go/bin:/usr/.local/go/bin:/usr/local/bin:"$SCRIPTS":/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
 
 # cdpath
 export CDPATH=".:$BELEZANAWEB:$GRUPOBOTICARIO:$BARBOSARWX:$DOTFILES:$REPOS:$HOME"
@@ -116,15 +115,15 @@ _have terraform && complete -C /usr/bin/terraform terraform
 _have terraform && complete -C /usr/bin/terraform tf
 _have kubectl && . <(kubectl completion bash 2>/dev/null)
 
-_have ansible && . <(register-python-argcomplete ansible)
-_have ansible-config && . <(register-python-argcomplete ansible-config)
-_have ansible-console && . <(register-python-argcomplete ansible-console)
-_have ansible-doc && . <(register-python-argcomplete ansible-doc)
-_have ansible-galaxy && . <(register-python-argcomplete ansible-galaxy)
-_have ansible-inventory && . <(register-python-argcomplete ansible-inventory)
-_have ansible-playbook && . <(register-python-argcomplete ansible-playbook)
-_have ansible-pull && . <(register-python-argcomplete ansible-pull)
-_have ansible-vault && . <(register-python-argcomplete ansible-vault)
+_have ansible && . <(register-python-argcomplete3 ansible)
+_have ansible-config && . <(register-python-argcomplete3 ansible-config)
+_have ansible-console && . <(register-python-argcomplete3 ansible-console)
+_have ansible-doc && . <(register-python-argcomplete3 ansible-doc)
+_have ansible-galaxy && . <(register-python-argcomplete3 ansible-galaxy)
+_have ansible-inventory && . <(register-python-argcomplete3 ansible-inventory)
+_have ansible-playbook && . <(register-python-argcomplete3 ansible-playbook)
+_have ansible-pull && . <(register-python-argcomplete3 ansible-pull)
+_have ansible-vault && . <(register-python-argcomplete3 ansible-vault)
 
 ## aliases
 unalias -a
@@ -205,3 +204,5 @@ __ps1() {
 
 # Set the PROMPT_COMMAND to call the __ps1 function, and synch tmux pane history
 PROMPT_COMMAND="__ps1; history -a; history -n; $PROMPT_COMMAND"
+
+complete -C /usr/bin/terraform terraform

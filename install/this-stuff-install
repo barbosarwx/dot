@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#set -e
+
+#chmod +x ../snippets/bash/*
+
+for a in $(ls install-*); do
+  program="$(echo $a | cut -d "-" -f 2)"
+  echo $program
+  if ! command -v $program > /dev/null 2>&1; then
+    echo "$program não existe"
+    chmod +x $a
+    sudo ./$a
+  else 
+    echo "$program already installed"
+  fi
+done
+
