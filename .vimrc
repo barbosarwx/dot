@@ -1,8 +1,5 @@
 " tested in v:version >= 800
 
-" no vi mimic
-set nocompatible
-
 " case-insensitive searches
 set ignorecase
 
@@ -96,34 +93,26 @@ set nowrap
 " command history
 set history=100
 
+" no vi mimic, polyglot also needs this
+set nocompatible
+
 " here because plugins and stuff need it
 syntax enable
 
-" faster scrolling
-set ttyfast
-
 " automatically detecting file types and applying the appropriate settings and plugins for those file types
 filetype plugin on
+
+" copilot-chat requires this
+filetype plugin indent on
+
+" faster scrolling
+set ttyfast
 
 " high contrast
 set background=dark
 
 " make gutter (number columm) transparent
 hi SignColumn ctermbg=NONE
-
-" base default color changes gruvbox dark friendly
-"hi StatusLine ctermfg=black ctermbg=NONE
-"hi StatusLineNC ctermfg=black ctermbg=NONE
-"hi Normal ctermbg=NONE
-"hi Special ctermfg=cyan
-"hi LineNr ctermfg=black ctermbg=NONE
-"hi SpecialKey ctermfg=black ctermbg=NONE
-"hi ModeMsg ctermfg=black cterm=NONE ctermbg=NONE
-"hi MoreMsg ctermfg=black ctermbg=NONE
-"hi NonText ctermfg=black ctermbg=NONE
-"hi vimGlobal ctermfg=black ctermbg=NONE
-"hi ErrorMsg ctermbg=234 ctermfg=darkred cterm=NONE
-"hi Error ctermbg=234 ctermfg=darkred cterm=NONE
 
 hi SpellBad ctermbg=234 ctermfg=darkred cterm=NONE
 hi SpellRare ctermbg=234 ctermfg=darkred cterm=NONE
@@ -132,7 +121,6 @@ hi Search ctermbg=236 ctermfg=yellow
 hi Todo ctermbg=236 ctermfg=darkgreen
 hi IncSearch ctermbg=236 cterm=NONE ctermfg=darkred
 hi MatchParen ctermbg=236 ctermfg=darkred
-
 
 " color overrides
 au FileType * hi StatusLine ctermfg=black ctermbg=NONE
@@ -172,21 +160,32 @@ au FileType markdown,pandoc noremap k gk
 " reload file before PlugInstall
 if filereadable(expand("~/.vim/autoload/plug.vim"))
 
+  " needs to be disabled before polyglot is loaded
+  let g:polyglot_disabled = ['go']  " standalone vim-go plugin works better
+
   call plug#begin('~/.local/share/vim/plugins')
   Plug 'conradirwin/vim-bracketed-paste'
-  Plug 'vim-pandoc/vim-pandoc' "https://github.com/neovim/neovim/issues/2102 -- install-utf8 script
-  Plug 'rwxrob/vim-pandoc-syntax-simple' "Because colors and hash instead of section sign character §.
+  Plug 'vim-pandoc/vim-pandoc'  "https://github.com/neovim/neovim/issues/2102 -- install-utf8 script
+  Plug 'rwxrob/vim-pandoc-syntax-simple'  "because colors and hash instead of section sign character §.
   Plug 'nordtheme/vim'
   Plug 'morhetz/gruvbox'
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-  Plug 'dense-analysis/ale' "Asynchronous Lint Engine
-  Plug 'hashivim/vim-terraform'
-  Plug 'tpope/vim-fugitive'
+  Plug 'dense-analysis/ale'  "asynchronous lint engine
+ "Plug 'hashivim/vim-terraform'  included in vim-polyglot
+  Plug 'tpope/vim-fugitive'  "git
   Plug 'github/copilot.vim'
+  Plug 'DanBradbury/copilot-chat.vim'  "copilot.vim doesn't support chat yet
+  Plug 'sheerun/vim-polyglot'  "language pack, better syntax highlighting
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}  "intellisense engine, language server client
   call plug#end()
 
   colorscheme nord
   "colorscheme gruvbox
+
+  "override nord vim tabline colors
+  hi TabLine     ctermfg=black ctermbg=NONE  cterm=NONE
+  hi TabLineSel  ctermfg=white ctermbg=black cterm=bold
+  hi TabLineFill ctermfg=NONE  ctermbg=NONE  cterm=none
 
   " ale
   let g:ale_lint_on_save = 1
@@ -235,14 +234,22 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:go_highlight_build_constraints = 1
   let g:go_highlight_diagnostic_errors = 1
   let g:go_highlight_diagnostic_warnings = 1
-  "let g:go_auto_type_info = 1 " forces 'Press ENTER' too much
   let g:go_auto_sameids = 0
   "time delay in milliseconds for triggering various automatic updates, such as cursorline, cursorcolumn, and others.
   set updatetime=100
-  "let g:go_gopls_analyses = { 'composites' : v:false }
-  "press \something to insert text
-  "au FileType go nmap <leader>m ilog.Print("made")<CR><ESC>
-  "au FileType go nmap <leader>n iif err != nil {return err}<CR><ESC>
+
+  "coc requires a lot of configs
+  if filereadable(expand("~/.vim/coc-config.vim"))
+    source ~/.vim/coc-config.vim
+  endif
+
+
+  "install language servers
+  let g:coc_global_extensions = [
+        \ 'coc-java',
+        \ '@yaegassy/coc-intelephense',
+        \ ]
+
 else
   autocmd vimleavepre *.go !gofmt -w % " backup if fatih fails
 endif
@@ -270,9 +277,6 @@ au bufnewfile,bufRead *.crontab set filetype=crontab
 au bufnewfile,bufRead *ssh/config set filetype=sshconfig
 au bufnewfile,bufRead .dockerignore set filetype=gitignore
 au bufnewfile,bufRead *gitconfig set filetype=gitconfig
-"au bufnewfile,bufRead *.go set spell spellcapcheck=0
-"au bufnewfile,bufRead commands.yaml set spell
-"au bufnewfile,bufRead *.txt set spell
 au bufnewfile,bufRead *.tf set filetype=terraform
 au bufnewfile,bufRead *.hcl set filetype=terraform
 au bufnewfile,bufRead *.dsl set filetype=groovy
@@ -294,28 +298,9 @@ map <F8> :ALEFix<CR>
 
 nmap <leader>2 :set paste<CR>i
 
-" disable arrow keys (vi muscle memory)
-" noremap <up> :echoerr "Umm, use k instead"<CR>
-" noremap <down> :echoerr "Umm, use j instead"<CR>
-" noremap <left> :echoerr "Umm, use h instead"<CR>
-" noremap <right> :echoerr "Umm, use l instead"<CR>
-" inoremap <up> <NOP>
-" inoremap <down> <NOP>
-" inoremap <left> <NOP>
-" inoremap <right> <NOP>
-
-" better use of arrow keys, number increment/decrement
-" nnoremap <up> <C-a>
-" nnoremap <down> <C-x>
-
 " Better page down and page up
 noremap <C-n> <C-d>
 noremap <C-p> <C-b>
-
-"augroup EmojiConversion
-"    autocmd!
-"    autocmd BufWritePost *.{md,adoc} execute 'silent !toemoji %' | edit!
-"augroup END
 
 "preserves cursor location when toemoji conversion runs on save
 augroup EmojiConversion

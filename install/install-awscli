@@ -1,0 +1,19 @@
+#!/bin/bash
+
+set -e
+
+source ../snippets/bash/decorator
+source ../snippets/bash/tempdir
+
+print_script_name
+temp_dir
+
+APP="awscli"
+# VERSION="2.28.2"
+
+curl "https://${APP}.amazonaws.com/${APP}-exe-linux-x86_64.zip" -o "${APP}v2.zip"
+unzip ${APP}v2.zip
+sudo ./aws/install
+
+clean_temp
+print_done

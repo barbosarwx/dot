@@ -11,7 +11,7 @@ _have() { type "$1" &>/dev/null; }
 #export OPENAI_API_KEY
 
 declare GROQ_API_KEY
-GROQ_API_KEY="$(tail -n1 "$HOME/.config/gpt/token")"
+GROQ_API_KEY="$(tail -n1 "$HOME/.config/gpt/token")"  # tail -n1
 export GROQ_API_KEY
 
 ! _have mods && echo "requires charmbracelet/mods" && exit 1
@@ -21,7 +21,7 @@ export GROQ_API_KEY
 #    mods --status-text "Ummm" -f "$*" | glow
 #  else
    #mods -m gemma2 -f --status-text "Ummm" "$*" # --settings to see aliases
-    mods -m gemma2 -f --status-text "Ummm" "$*" # --settings to see aliases
+    mods --api groq -m gemma2-9b-it -f --status-text "Ummm" "in one paragraph, $*" # --settings to see aliases
 #   mods -m claude3.5-sonnet -f --status-text "Ummm" "$*"
 #  fi
 #else

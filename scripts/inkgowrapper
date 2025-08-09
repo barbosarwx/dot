@@ -1,6 +1,6 @@
 #!/bin/bash
 
-REPO="$HOME/Repos/github.com/barbosarwx/"
+REPO="$HOME/Repos/github.com/barbosarwx"
 
 if [ "$1" = "list" ]; then
     go run "$REPO"/inkgo/main.go "$@"

@@ -5,13 +5,13 @@
 #chmod +x ../snippets/bash/*
 
 for a in $(ls install-*); do
-  program="$(echo $a | cut -d "-" -f 2)"
-  echo $program
-  if ! command -v $program > /dev/null 2>&1; then
+  program="$(echo "$a" | cut -d "-" -f 2-3)"
+  echo "$program"
+  if ! command -v "$program" > /dev/null 2>&1; then
     echo "$program não existe"
-    chmod +x $a
-    sudo ./$a
-  else 
+    chmod +x "$a"
+    sudo ./"$a"  # todo some of them cant be run with sudo
+  else
     echo "$program already installed"
   fi
 done

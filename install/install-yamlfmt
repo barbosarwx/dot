@@ -15,7 +15,5 @@ tar -xzvf ${APP}.tar.gz
 chmod +x ${APP}
 sudo mv ${APP} /usr/local/bin/
 
-python3 -m pip install --user yamllint
-
 clean_temp
 print_done

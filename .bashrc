@@ -38,10 +38,15 @@ shopt -s dotglob # allows you to match hidden files when using wildcards like * 
 shopt -s extglob # allows the use of extended globbing patterns
 
 # path
+
 export PATH="$HOME/.local/bin:$HOME/.local/go/bin:/usr/.local/go/bin:/usr/local/bin:"$SCRIPTS":/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/local/go/bin:/home/linuxbrew/.linuxbrew/bin"
 
 # cdpath
-export CDPATH=".:$BELEZANAWEB:$GRUPOBOTICARIO:$BARBOSARWX:$DOTFILES:$REPOS:$HOME"
+
+if [[ -r "$HOME/.work_stuff" ]]; then
+   append_to_cdpath=$(head -n 1 "$HOME/.work_stuff")
+   export CDPATH=".:$BARBOSARWX:$DOTFILES:$REPOS:$HOME:${append_to_cdpath}"
+fi
 
 # dircolors
 
@@ -67,13 +72,19 @@ export USER="${USER:-$(whoami)}" # fallback to whoami
 export TZ=America/Sao_Paulo
 
 export REPOS="$HOME/Repos/github.com"
-export BELEZANAWEB="$REPOS/belezanaweb"
-export GRUPOBOTICARIO="$REPOS/grupoboticario"
 export BARBOSARWX="$REPOS/barbosarwx"
 export DOTFILES="$BARBOSARWX/dot"
 export LAB="$BARBOSARWX/lab"
 export SCRIPTS="$DOTFILES/scripts"
 export SNIPPETS="$DOTFILES/snippets"
+
+# export work variables
+
+if [[ -r "$HOME/work_stuff" ]]; then
+   tail -n +2 "$HOME/work_stuff" | while read -r line; do
+     eval "$line"
+   done
+fi
 
 export DESKTOP="$HOME/Desktop"
 export DOCUMENTS="$HOME/Documents"
@@ -81,9 +92,10 @@ export DOWNLOADS="$HOME/Downloads"
 export WORKSPACES="$HOME/Workspaces" # container home dirs for mounting
 export TRAMPO="$HOME/Trampo"
 
-export EDITOR=vi
-export VISUAL=vi
-export EDITOR_PREFIX=vi
+# so programs use the newer instalation version of vim
+export EDITOR=vim
+export VISUAL=vim
+
 export TERM=xterm-256color
 export HELP_BROWSER=lynx
 export HRULEWIDTH=73 # affect the behavior or appearance of text-based applications or scripts that utilize it:
@@ -114,7 +126,7 @@ _have aws_completer && complete -C /usr/local/bin/aws_completer aws
 _have terraform && complete -C /usr/bin/terraform terraform
 _have terraform && complete -C /usr/bin/terraform tf
 _have kubectl && . <(kubectl completion bash 2>/dev/null)
-
+_have kubectl && complete -o default -F __start_kubectl k
 _have ansible && . <(register-python-argcomplete3 ansible)
 _have ansible-config && . <(register-python-argcomplete3 ansible-config)
 _have ansible-console && . <(register-python-argcomplete3 ansible-console)
@@ -150,8 +162,7 @@ alias ssh='ssh -v'
 alias k='kubectl'
 alias sts='aws sts get-caller-identity'
 alias tp='terragrunt plan --terragrunt-log-level debug'
-
-_have vim && alias vi=vim
+alias vi='vim'
 
 # smart prompt
 
@@ -205,4 +216,8 @@ __ps1() {
 # Set the PROMPT_COMMAND to call the __ps1 function, and synch tmux pane history
 PROMPT_COMMAND="__ps1; history -a; history -n; $PROMPT_COMMAND"
 
-complete -C /usr/bin/terraform terraform
+
+# coc-vim needs this
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"  # This loads nvm
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
