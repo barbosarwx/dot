@@ -9,9 +9,9 @@ set autoindent
 " avoid losing changes
 set autowrite
 
-" cursor current position, line number and col number
+" cursor current position, line/col number and ruler size
 set ruler "see ruf for formating
-set ruf=%30(%=%#LineNr#%.50F\ [%{strlen(&ft)?&ft:'none'}]\ %l:%c\ %p%%%)
+set ruf=%40(%=%#LineNr#%.50F\ [%{strlen(&ft)?&ft:'none'}]\ %l:%c\ %p%%%)
 
 " deactivate line numbers
 set nonumber
@@ -48,9 +48,6 @@ set listchars=space:*,trail:*,nbsp:*,extends:>,precedes:<,tab:\|>
 set foldmethod=indent
 "set nofoldenable "disable automatic folding, when opening a file
 
-" highlight trailing whitespace at the end of lines
-match IncSearch '\s\+$'
-
 " automatically wrapping text at a specific column
 set textwidth=72
 
@@ -62,11 +59,15 @@ set norelativenumber
 
 " turn off default spell-checking
 set nospell
+set spelllang=en,pt
 
 " more risky, but cleaner
 set nobackup
 set noswapfile
 set nowritebackup
+
+" highlight trailing whitespace at the end of lines
+match IncSearch '\s\+$'
 
 " enables highlighting of search results as you type
 set hlsearch
@@ -111,7 +112,7 @@ set ttyfast
 " high contrast
 set background=dark
 
-" make gutter (number columm) transparent
+" make gutter (left bar) transparent
 hi SignColumn ctermbg=NONE
 
 hi SpellBad ctermbg=234 ctermfg=darkred cterm=NONE
@@ -214,9 +215,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   " pandoc
   let g:pandoc#formatting#mode = 'h' " A'
   let g:pandoc#formatting#textwidth = 72
-  " pandoc spell
-  let g:pandoc#spell#enabled = 0
-  let g:pandoc#spell#default_langs = ['pt', 'en']
+  " pandoc spell - currently using vim default spell with eng,pt
+  "let g:pandoc#spell#enabled = 0
+  "let g:pandoc#spell#default_langs = ['pt', 'en']
 
   " golang
   let g:go_fmt_fail_silently = 0
