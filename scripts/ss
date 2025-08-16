@@ -6,10 +6,16 @@ delay="gnome-screenshot -a -d 3" # =seconds
 pwd > /tmp/mypath.txt
 workingdir=$(head -n1 /tmp/mypath.txt)
 
+if [ -z "$1" ]; then
+  random_prefix_if_needed="$(isosec)"
+else
+  random_prefix_if_needed="$1"
+fi
+
 if [ "$1" == "delay" ]; then
   printname=$2
 else
-  printname=$1
+  printname="$random_prefix_if_needed"  # else the png gonna start with . and be hidden
 fi
 
 sspath="$workingdir/media/$printname.png"

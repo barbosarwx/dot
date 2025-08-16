@@ -1,0 +1,6 @@
+#!/bin/bash
+
+aws sts get-caller-identity
+echo "Current Region is $(aws configure get region)"
+
+

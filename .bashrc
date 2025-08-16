@@ -160,7 +160,6 @@ alias c='printf "\e[H\e[2J"'
 alias path='echo -e ${PATH//:/\\n}'
 alias ssh='ssh -v'
 alias k='kubectl'
-alias sts='aws sts get-caller-identity'
 alias tp='terragrunt plan --terragrunt-log-level debug'
 alias vi='vim'
 

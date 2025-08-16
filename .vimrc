@@ -166,24 +166,24 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   call plug#begin('~/.local/share/vim/plugins')
   Plug 'conradirwin/vim-bracketed-paste'
-  Plug 'vim-pandoc/vim-pandoc'  "https://github.com/neovim/neovim/issues/2102 -- install-utf8 script
+  Plug 'vim-pandoc/vim-pandoc'  " https://github.com/neovim/neovim/issues/2102 -- install-utf8 script
   Plug 'rwxrob/vim-pandoc-syntax-simple'  "because colors and hash instead of section sign character §.
   Plug 'nordtheme/vim'
   Plug 'morhetz/gruvbox'
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
-  Plug 'dense-analysis/ale'  "asynchronous lint engine
+  Plug 'dense-analysis/ale'  " asynchronous lint engine
  "Plug 'hashivim/vim-terraform'  included in vim-polyglot
-  Plug 'tpope/vim-fugitive'  "git
+  Plug 'tpope/vim-fugitive'  " git
   Plug 'github/copilot.vim'
-  Plug 'DanBradbury/copilot-chat.vim'  "copilot.vim doesn't support chat yet
-  Plug 'sheerun/vim-polyglot'  "language pack, better syntax highlighting
-  Plug 'neoclide/coc.nvim', {'branch': 'release'}  "intellisense engine, language server client
+  Plug 'DanBradbury/copilot-chat.vim'  " copilot.vim doesn't support chat yet
+  Plug 'sheerun/vim-polyglot'  " language pack, better syntax highlighting
+  Plug 'neoclide/coc.nvim', {'branch': 'release'}  " intellisense engine, language server client
   call plug#end()
 
   colorscheme nord
-  "colorscheme gruvbox
+  " colorscheme gruvbox
 
-  "override nord vim tabline colors
+  " override nord vim tabline colors
   hi TabLine     ctermfg=black ctermbg=NONE  cterm=NONE
   hi TabLineSel  ctermfg=white ctermbg=black cterm=bold
   hi TabLineFill ctermfg=NONE  ctermbg=NONE  cterm=none
@@ -193,12 +193,13 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:ale_set_highlights = 1
   let g:ale_sign_error = '☠'
   let g:ale_sign_warning = '⚠'
+  " test coc linters instead
   let g:ale_linters = {'go': ['golangci-lint','gofmt','gobuild'],
         \              'terraform': ['terraform','tflint','tfsec'],
         \              'json': ['biome'],
         \              'yaml': ['yamllint'],
         \}
-" `*` works for all file types, except the listed below
+  " `*` works for all file types, except the listed below
   let g:ale_fixers = {'*': ['remove_trailing_lines', 'trim_whitespace'],
         \             'terraform': ['terraform','remove_trailing_lines', 'trim_whitespace'],
         \             'json': ['biome','remove_trailing_lines', 'trim_whitespace'],
@@ -206,6 +207,9 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
         \}
   " show style issues
   let g:ale_vim_vint_show_style_issues = 1
+
+  " copilot
+  let g:copilot_chat_window_position = 'left'
 
   " terraform
   let g:terraform_align = 1
@@ -236,19 +240,20 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   let g:go_highlight_diagnostic_errors = 1
   let g:go_highlight_diagnostic_warnings = 1
   let g:go_auto_sameids = 0
-  "time delay in milliseconds for triggering various automatic updates, such as cursorline, cursorcolumn, and others.
+  " time delay in milliseconds for triggering various automatic updates, such as cursorline, cursorcolumn, and others.
   set updatetime=100
 
-  "coc requires a lot of configs
+  " coc requires a lot of configs
   if filereadable(expand("~/.vim/coc-config.vim"))
     source ~/.vim/coc-config.vim
   endif
 
-
-  "install language servers
+  " install language servers
   let g:coc_global_extensions = [
         \ 'coc-java',
         \ '@yaegassy/coc-intelephense',
+        \ 'coc-pyright',
+        \ 'coc-sh'
         \ ]
 
 else
@@ -261,7 +266,7 @@ augroup CloseLoclistWindowGroup
   autocmd QuitPre * if empty(&buftype) | lclose | endif
 augroup END
 
-"enhances the command-line completion and navigation experience in Vim
+" enhances the command-line completion and navigation experience in Vim
 set wildmenu
 
 " enable omni-completion
@@ -299,11 +304,11 @@ map <F8> :ALEFix<CR>
 
 nmap <leader>2 :set paste<CR>i
 
-" Better page down and page up
+" better page down and page up
 noremap <C-n> <C-d>
 noremap <C-p> <C-b>
 
-"preserves cursor location when toemoji conversion runs on save
+" preserves cursor location when toemoji conversion runs on save
 augroup EmojiConversion
     autocmd!
     autocmd BufWritePost *.{md,adoc} let save_cursor = getpos(".") | execute 'silent !toemoji %' | edit! | call setpos('.', save_cursor)
