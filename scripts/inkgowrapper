@@ -1,17 +1,27 @@
 #!/bin/bash
 
+# a temporary wrapper for my note taking app made in golang.
+
 REPO="$HOME/Repos/github.com/barbosarwx"
 
-if [ "$1" = "list" ]; then
+# todo case
+
+if [ "$1" = "list" ] || [ "$1" = "sheet" ]; then
     go run "$REPO"/inkgo/main.go "$@"
     exit 0
 fi
+
 if [ "$1" = "push" ]; then
    cd "$REPO"/inks/ && \
    git status && \
    git add "$REPO"/inks/ . && \
    git commit -m "add: inks" ; \
    git push origin master
+   exit 0
+fi
+
+if [ "$1" = "edit" ]; then
+   vim "$REPO/inks/docs/$2/README.md"
    exit 0
 fi
 
