@@ -162,6 +162,7 @@ alias ssh='ssh -v'
 alias k='kubectl'
 alias tp='terragrunt plan --terragrunt-log-level debug'
 alias vi='vim'
+alias ink='inkgowrapper'
 
 # smart prompt
 

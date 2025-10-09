@@ -137,8 +137,8 @@ au FileType * hi vimGlobal ctermfg=black ctermbg=NONE
 au FileType * hi goComment ctermfg=black ctermbg=NONE
 au FileType * hi ErrorMsg ctermbg=234 ctermfg=darkred cterm=NONE
 au FileType * hi Error ctermbg=234 ctermfg=darkred cterm=NONE
-au FileType * hi SpellBad ctermbg=234 ctermfg=darkred cterm=NONE
-au FileType * hi SpellRare ctermbg=234 ctermfg=darkred cterm=NONE
+au FileType * hi SpellBad ctermbg=234 ctermfg=NONE cterm=NONE
+au FileType * hi SpellRare ctermbg=234 ctermfg=NONE cterm=NONE
 au FileType * hi Search ctermbg=236 ctermfg=darkred
 au FileType * hi Todo ctermbg=236 ctermfg=darkred
 au FileType * hi IncSearch ctermbg=236 cterm=NONE ctermfg=darkred
