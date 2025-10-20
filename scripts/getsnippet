@@ -1,5 +1,28 @@
 #!/bin/bash
 
+PUBLIC_DIR="$BARBOSARWX/dot/snippets"
+PRIVATE_DIR="$BARBOSARWX/private-snippets"
+
+if [ -z "$1" ] || [ -z "$2" ]; then
+  echo "Usage: $(basename "$0") <language> <snippet_name>" >&2
+  exit 1
+fi
+
 LANG=$1
 SNIPPET=$2
-cat "$BARBOSARWX/dot/snippets/$LANG/$SNIPPET"
+
+private_path="$PRIVATE_DIR/$LANG/$SNIPPET"
+public_path="$PUBLIC_DIR/$LANG/$SNIPPET"
+
+if [ -f "$private_path" ]; then
+  cat "$private_path"
+  exit 0
+fi
+
+if [ -f "$public_path" ]; then
+  cat "$public_path"
+  exit 0
+fi
+
+echo "Error: Snippet '$SNIPPET' not found for lang '$LANG'" >&2
+exit 1

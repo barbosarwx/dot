@@ -112,9 +112,6 @@ set ttyfast
 " high contrast
 set background=dark
 
-" make gutter (left bar) transparent
-hi SignColumn ctermbg=NONE
-
 hi SpellBad ctermbg=234 ctermfg=darkred cterm=NONE
 hi SpellRare ctermbg=234 ctermfg=darkred cterm=NONE
 
@@ -123,10 +120,9 @@ hi Todo ctermbg=236 ctermfg=darkgreen
 hi IncSearch ctermbg=236 cterm=NONE ctermfg=darkred
 hi MatchParen ctermbg=236 ctermfg=darkred
 
-" color overrides
+" color overrides todo must be after theme call
 au FileType * hi StatusLine ctermfg=black ctermbg=NONE
 au FileType * hi StatusLineNC ctermfg=black ctermbg=NONE
-au FileType * hi Normal ctermbg=NONE
 au FileType * hi Special ctermfg=cyan
 au FileType * hi LineNr ctermfg=black ctermbg=NONE
 au FileType * hi SpecialKey ctermfg=black ctermbg=NONE
@@ -144,9 +140,6 @@ au FileType * hi Todo ctermbg=236 ctermfg=darkred
 au FileType * hi IncSearch ctermbg=236 cterm=NONE ctermfg=darkred
 au FileType * hi MatchParen ctermbg=236 ctermfg=darkred
 
-au FileType markdown,pandoc hi Title ctermfg=darkblue ctermbg=NONE
-au FileType markdown,pandoc hi Operator ctermfg=darkblue ctermbg=NONE
-au FileType markdown,pandoc set tw=0
 au FileType yaml hi yamlBlockMappingKey ctermfg=NONE
 
 " file type settings
@@ -166,8 +159,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
 
   call plug#begin('~/.local/share/vim/plugins')
   Plug 'conradirwin/vim-bracketed-paste'
-  Plug 'vim-pandoc/vim-pandoc'  " https://github.com/neovim/neovim/issues/2102 -- install-utf8 script
-  Plug 'rwxrob/vim-pandoc-syntax-simple'  "because colors and hash instead of section sign character §.
   Plug 'nordtheme/vim'
   Plug 'morhetz/gruvbox'
   Plug 'fatih/vim-go', { 'do': ':GoInstallBinaries' }
@@ -180,8 +171,20 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   Plug 'neoclide/coc.nvim', {'branch': 'release'}  " intellisense engine, language server client
   call plug#end()
 
+  set termguicolors " enable 24-bit RGB color in the TUI better colors for nord
   colorscheme nord
-  " colorscheme gruvbox
+  " better markdown heading colors (Nord-style)
+  highlight mkdHeading guifg=#88C0D0 ctermfg=214 gui=bold
+  set conceallevel=2  " enable markdown nested highlighting
+  au FileType markdown,pandoc set tw=0
+
+  highlight Normal guibg=NONE ctermbg=NONE
+  highlight SignColumn guibg=NONE ctermbg=NONE
+
+
+
+  " make gutter (left bar) transparent
+  hi SignColumn ctermbg=NONE
 
   " override nord vim tabline colors
   hi TabLine     ctermfg=black ctermbg=NONE  cterm=NONE
@@ -216,13 +219,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   "let g:terraform_fmt_on_save = 1
   let g:hcl_align = 1
 
-  " pandoc
-  let g:pandoc#formatting#mode = 'h' " A'
-  let g:pandoc#formatting#textwidth = 72
-  " pandoc spell - currently using vim default spell with eng,pt
-  "let g:pandoc#spell#enabled = 0
-  "let g:pandoc#spell#default_langs = ['pt', 'en']
-
   " golang
   let g:go_fmt_fail_silently = 0
   let g:go_fmt_command = 'goimports'
@@ -243,12 +239,12 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
   " time delay in milliseconds for triggering various automatic updates, such as cursorline, cursorcolumn, and others.
   set updatetime=100
 
-  " coc requires a lot of configs
+  " coc default configs, functions, and mappings
   if filereadable(expand("~/.vim/coc-config.vim"))
     source ~/.vim/coc-config.vim
   endif
 
-  " install language servers
+  " coc install language servers
   let g:coc_global_extensions = [
         \ 'coc-java',
         \ '@yaegassy/coc-intelephense',
@@ -256,8 +252,6 @@ if filereadable(expand("~/.vim/autoload/plug.vim"))
         \ 'coc-sh'
         \ ]
 
-else
-  autocmd vimleavepre *.go !gofmt -w % " backup if fatih fails
 endif
 
 " force loclist to always close when buffer does (affects vim-go, etc.)
@@ -286,7 +280,7 @@ au bufnewfile,bufRead *gitconfig set filetype=gitconfig
 au bufnewfile,bufRead *.tf set filetype=terraform
 au bufnewfile,bufRead *.hcl set filetype=terraform
 au bufnewfile,bufRead *.dsl set filetype=groovy
-au bufnewfile,bufRead *.md set filetype=pandoc
+au bufnewfile,bufRead *.md set filetype=markdown
 
 au BufNewFile,BufRead *.yaml,*.yml so $DOTFILES/yaml.vim
 
